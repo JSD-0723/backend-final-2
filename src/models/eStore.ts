@@ -45,7 +45,7 @@ function createModels() {
         this.setDataValue('password', hashedPassword);
       }
     },
-    
+
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -104,7 +104,7 @@ function createModels() {
       type: DataTypes.STRING,
       allowNull: false
     },
-  
+
   })
 
   const rating = sequelize.define('rating', {
@@ -121,7 +121,7 @@ function createModels() {
       allowNull: false,
 
     },
-   
+
   })
 
   const product = sequelize.define('product', {
@@ -158,7 +158,7 @@ function createModels() {
       type: DataTypes.STRING,
       allowNull: true
     },
- 
+
   }
   )
 
@@ -170,20 +170,20 @@ function createModels() {
       autoIncrement: true,
       unique: true
     },
-    name:{
-      type:DataTypes.STRING,
-      allowNull:false
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
 
     },
     logo: {
       type: DataTypes.STRING,
       allowNull: true
     }
-  },{
-    timestamps:false
+  }, {
+    timestamps: false
   })
 
-  const categorei = sequelize.define('categorei', {
+  const categorie = sequelize.define('categorei', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -191,16 +191,16 @@ function createModels() {
       autoIncrement: true,
       unique: true
     },
-    name:{
-type:DataTypes.STRING,
-allowNull:false
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     logo: {
       type: DataTypes.STRING,
       allowNull: true
     }
-  },{
-    timestamps:false
+  }, {
+    timestamps: false
   }
   )
 
@@ -221,14 +221,8 @@ allowNull:false
   rating.belongsTo(product)
   brand.hasMany(product)
   product.belongsTo(brand)
-  categorei.hasMany(product)
-  product.belongsTo(categorei)
-
-
-
-
-
-
+  categorie.hasMany(product)
+  product.belongsTo(categorie)
 
 
   sequelize.sync({ alter: true })
@@ -239,7 +233,11 @@ allowNull:false
       console.error(error);
     });
 
-  return { 'user': User, 'userRole': user_role, 'wishList': wish_list, 'review': review, 'rating': rating, 'product': product, 'categorei': categorei, 'brand': brand };
+  return {
+    'user': User, 'userRole': user_role,
+    'wishList': wish_list, 'review': review,
+    'rating': rating, 'product': product, 'categorie': categorie, 'brand': brand
+  };
 }
 
 

@@ -4,6 +4,7 @@ const jwt=require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const modelsMap = createModels();
 const User=modelsMap['user']
+const Brand =modelsMap['brand']
 const key:any=process.env.tokenKey
 
 
@@ -67,7 +68,18 @@ export const createUser = (req: Request, res: Response) => {
     });
 };
 //############################################################################################
-
+export const shopByBrand = (req: Request, res: Response) => {
+  Brand.findAll({
+    attributes: ['logo'],
+  })
+    .then((result: any) => {
+      res.send(result);
+    })
+    .catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    });
+};
 
 
 
