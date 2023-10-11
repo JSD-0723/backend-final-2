@@ -1,32 +1,25 @@
-import Config from "./src/config/environment"
+import express from 'express';
+import bodyParser from 'body-parser';
+import { Router } from 'express';
+import dotenv from 'dotenv';
+import router from './src/routes/eStoreRouter';
 
-import express, { Request, Response, NextFunction } from "express"
+const app = express();
+const eStoreRouter: Router = router; 
 
-import serverErrorHandler from "./src/utils/error/serverErrorHandler"
-import clientErrorHandler from "./src/utils/error/clientErrorHandler"
+dotenv.config();
 
-import apiRouter from "./src/routers"
+const port = process.env.PORT 
+const host = process.env.HOST 
 
-const app = express()
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// use api router
-app.use("/api/v1/", apiRouter)
+// Routes
+app.use('/eStore', eStoreRouter);
 
-// hello world
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).json({
-    message: "Hello world!",
-  })
-})
-
-// client error handler
-app.use(clientErrorHandler)
-
-// error handler
-app.use(serverErrorHandler)
-
-app.listen(Config.server.port, () =>
-  console.log(`Server running on port ${Config.server.port}`)
-)
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on http://${host}:${port}`);
+});
