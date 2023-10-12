@@ -4,7 +4,6 @@ const jwt=require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const modelsMap = createModels();
 const User=modelsMap['user']
-const Categorie =modelsMap['categorie']
 const key:any=process.env.tokenKey
 
 
@@ -68,7 +67,32 @@ export const createUser = (req: Request, res: Response) => {
     });
 };
 //############################################################################################
+export const newArrival = (req: Request, res: Response) => {
+  // Calculate a date three months ago
+  const threeMonthsAgo = new Date();
+  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+ console.log(threeMonthsAgo)
 
+
+  // Use Sequelize or your database library to query for products created within the last three months
+  Product.findAll({
+    attributes:
+      ['img','short_description','price','name']
+    ,
+    where: {
+      createdAt: {
+        [Op.gt]: threeMonthsAgo, // Less than three months ago
+      },
+    },
+  })
+    .then((result: any) => {
+      res.send(result);
+    })
+    .catch((error: any) => {
+      res.status(500).send('Error: ' + error);
+    });
+};
+//#############################################################################
 export const shopByCollection = (req: Request, res: Response) => {
   Categorie.findAll({
     attributes: ['img', 'name'],
@@ -81,9 +105,4 @@ export const shopByCollection = (req: Request, res: Response) => {
       res.status(500).send('Internal Server Error');
     });
 };
-
-
-
-
-
-
+//############################################################################################
