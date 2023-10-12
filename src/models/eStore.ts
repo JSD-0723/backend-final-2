@@ -4,14 +4,12 @@ const bcrypt = require('bcrypt');
 dotenv.config()
 const host = process.env.host;
 const databaseName = process.env.databaseName;
-const useName = process.env.useNAme || 'root';
+const useName = process.env.useName || 'root';
 const password = process.env.password;
 const databasePort = process.env.databasePort;
 
 
 function createModels() {
-  console.log('////////////////////////////////////////')
-  console.log(useName,password)
   const sequelize = new Sequelize({
     password: password,
     database: databaseName,
