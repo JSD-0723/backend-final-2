@@ -4,8 +4,10 @@ const jwt=require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const modelsMap = createModels();
 const User=modelsMap['user']
+const Categorie=modelsMap['categorie']
+const Product=modelsMap['product']
 const key:any=process.env.tokenKey
-
+const { Op, literal } = require('sequelize');
 
 
 interface UserInformation{
