@@ -10,6 +10,8 @@ const databasePort = process.env.databasePort;
 
 
 function createModels() {
+  console.log('////////////////////////////////////////')
+  console.log(useName,password)
   const sequelize = new Sequelize({
     password: password,
     database: databaseName,
