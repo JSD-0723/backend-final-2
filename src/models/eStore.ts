@@ -195,7 +195,7 @@ function createModels() {
       type: DataTypes.STRING,
       allowNull: false
     },
-    logo: {
+    img: {
       type: DataTypes.STRING,
       allowNull: true
     }
@@ -204,7 +204,7 @@ function createModels() {
   }
   )
 
-
+  //relation 
   user_role.hasMany(User)
   User.belongsTo(user_role)
   User.hasOne(wish_list)
@@ -235,8 +235,8 @@ function createModels() {
 
   return {
     'user': User, 'userRole': user_role,
-    'wishList': wish_list, 'review': review,
-    'rating': rating, 'product': product, 'categorie': categorie, 'brand': brand
+    'wishList': wish_list, 'review': review, 'rating': rating,
+    'product': product, 'categorie': categorie, 'brand': brand
   };
 }
 
