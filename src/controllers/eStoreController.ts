@@ -6,6 +6,7 @@ const modelsMap = createModels();
 const User=modelsMap['user']
 const Categorie=modelsMap['categorie']
 const Product=modelsMap['product']
+const Brand =modelsMap['brand']
 const key:any=process.env.tokenKey
 const { Op, literal } = require('sequelize');
 
@@ -108,3 +109,15 @@ export const shopByCollection = (req: Request, res: Response) => {
     });
 };
 //############################################################################################
+export const shopByBrand = (req: Request, res: Response) => {
+  Brand.findAll({
+    attributes: ['logo'],
+  })
+    .then((result: any) => {
+      res.send(result);
+    })
+    .catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    });
+};
