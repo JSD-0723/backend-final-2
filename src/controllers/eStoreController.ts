@@ -4,10 +4,7 @@ const jwt=require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const modelsMap = createModels();
 const User=modelsMap['user']
-const Product=modelsMap['product']
 const key:any=process.env.tokenKey
-const { Op, literal } = require('sequelize');
-
 
 
 
@@ -15,10 +12,6 @@ interface UserInformation{
   name:string,
   password:string,
   email:string
-}
-
-interface ProductInformation{
-  id:number 
 }
 
 
@@ -99,6 +92,17 @@ export const newArrival = (req: Request, res: Response) => {
       res.status(500).send('Error: ' + error);
     });
 };
-
-
-
+//#############################################################################
+export const shopByCollection = (req: Request, res: Response) => {
+  Categorie.findAll({
+    attributes: ['img', 'name'],
+  })
+    .then((result: any) => {
+      res.send(result);
+    })
+    .catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    });
+};
+//############################################################################################
