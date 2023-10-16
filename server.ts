@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { Router } from 'express';
 import dotenv from 'dotenv';
 import router from './src/routes/eStoreRouter';
+const cors =require('cors')
 
 const app = express();
 const eStoreRouter: Router = router; 
@@ -13,6 +14,7 @@ const port = process.env.PORT
 const host = process.env.HOST 
 
 // Middleware
+app.use(cors({origin:'*'}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
