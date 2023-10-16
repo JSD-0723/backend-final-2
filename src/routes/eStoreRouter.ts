@@ -10,6 +10,6 @@ router.get('/shopByCollection',eStoreController.shopByCollection)
 router.get('/newArrival',eStoreController.newArrival)
 router.get('/viewCategoryName',eStoreController.viewCategoryName)
 router.get('/searchProduct',eStoreController.searchByBrandOrProductName)
-router.get('viewProductByCategory',eStoreController.viewProductBelongCategory)
+router.get('/viewProductByCategory',eStoreController.viewProductBelongCategory)
 export default router;
 
