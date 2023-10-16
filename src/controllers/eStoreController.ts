@@ -138,8 +138,7 @@ export const viewCategoryName=(req:Request,res:Response)=>{
 }
 
 export const searchByBrandOrProductName=(req:Request,res:Response)=>{
-  const urlParams = new URLSearchParams(window.location.search);
-  const barndOrProductName=urlParams.get('name');
+  const barndOrProductName=req.query.name
   Product.findAll({
     where:{name:barndOrProductName,brand_name:barndOrProductName},
     attributes: ['img', 'name']
