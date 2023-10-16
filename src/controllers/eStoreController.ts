@@ -121,3 +121,17 @@ export const shopByBrand = (req: Request, res: Response) => {
       res.status(500).send('Internal Server Error');
     });
 };
+//###################################################################
+const viewCategoryNAme=(req:Request,res:Response)=>{
+  Categorie.findAll({
+    attributes: ['name'],
+  })
+    .then((result: any) => {
+      res.send(result);
+    })
+    .catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    });
+  
+}
