@@ -122,7 +122,7 @@ export const shopByBrand = (req: Request, res: Response) => {
     });
 };
 //###################################################################
-const viewCategoryNAme=(req:Request,res:Response)=>{
+export const viewCategoryName=(req:Request,res:Response)=>{
   Categorie.findAll({
     attributes: ['name'],
   })
