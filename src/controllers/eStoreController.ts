@@ -140,7 +140,10 @@ export const viewCategoryName=(req:Request,res:Response)=>{
 export const searchByBrandOrProductName=(req:Request,res:Response)=>{
   const barndOrProductName=req.query.name
   Product.findAll({
-    where:{name:barndOrProductName,brand_name:barndOrProductName},
+    where:{[Op.or]: [
+      { name: barndOrProductName },
+      { brand_name: barndOrProductName },
+    ]},
     attributes: ['img', 'name']
   }).then((result: any) => {
     res.send(result);
