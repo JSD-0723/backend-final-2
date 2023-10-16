@@ -155,3 +155,19 @@ export const searchByBrandOrProductName=(req:Request,res:Response)=>{
 
 
 }
+
+export const viewProductBelongCategory=(req:Request,res:Response)=>{
+  const categoryName=req.query.name
+  Product.findAll({
+    where:{
+       categorie_name: categoryName },
+    attributes: ['img', 'name','price','short_description','rating']
+  }).then((result: any) => {
+    res.send(result);
+  })
+  .catch((error: any) => {
+    console.error('Error:', error);
+    res.status(500).send('Internal Server Error');
+  });
+
+}

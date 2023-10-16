@@ -167,6 +167,11 @@ function createModels() {
       type:DataTypes.STRING,
       allowNull:true
     }
+    ,rating:{
+      type:DataTypes.INTEGER,
+      allowNull:true
+
+    }
 
   }
   )
