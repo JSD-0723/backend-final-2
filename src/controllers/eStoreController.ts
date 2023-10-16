@@ -125,6 +125,7 @@ export const shopByBrand = (req: Request, res: Response) => {
 export const viewCategoryName=(req:Request,res:Response)=>{
   Categorie.findAll({
     attributes: ['name'],
+    limit: 5,
   })
     .then((result: any) => {
       res.send(result);
