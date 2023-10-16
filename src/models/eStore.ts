@@ -158,6 +158,15 @@ function createModels() {
       type: DataTypes.STRING,
       allowNull: true
     },
+    brand_name:{
+      type:DataTypes.STRING,
+      allowNull:true
+    }
+    ,
+    categorie_name:{
+      type:DataTypes.STRING,
+      allowNull:true
+    }
 
   }
   )
