@@ -212,6 +212,10 @@ function createModels() {
     img: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    mobile_img:{
+      type: DataTypes.STRING,
+      allowNull: true 
     }
   }, {
     timestamps: false

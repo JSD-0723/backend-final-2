@@ -125,7 +125,7 @@ export const shopByBrand = (req: Request, res: Response) => {
 export const viewCategoryName=(req:Request,res:Response)=>{
   Categorie.findAll({
     attributes: ['name'],
-    limit: 5,
+    limit: 7,
   })
     .then((result: any) => {
       res.send(result);
@@ -144,7 +144,7 @@ export const searchByBrandOrProductName=(req:Request,res:Response)=>{
       { name: barndOrProductName },
       { brand_name: barndOrProductName },
     ]},
-    attributes: ['img', 'name']
+    attributes: ['img', 'name','price','short_description','rating']
   }).then((result: any) => {
     res.send(result);
   })
@@ -171,3 +171,24 @@ export const viewProductBelongCategory=(req:Request,res:Response)=>{
   });
 
 }
+
+export const TopCategoriesFormobile=(req:Request,res:Response)=>{
+  Categorie.findAll({
+    where: {
+      mobile_img: {
+        [Op.ne]: null // Check if 'mobile_img' is not equal to null
+      }
+    },
+    attributes: ['name','mobile_img'],
+    limit: 7,
+  })
+    .then((result: any) => {
+      res.send(result);
+    })
+    .catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    });
+  
+}
+  
