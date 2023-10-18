@@ -157,7 +157,7 @@ export const searchByBrandOrProductName=(req:Request,res:Response)=>{
 }
 
 export const viewProductBelongCategory=(req:Request,res:Response)=>{
-  const categoryName=req.params.name
+  const categoryName=req.query.name
   Product.findAll({
     where:{
        categorie_name: categoryName },
