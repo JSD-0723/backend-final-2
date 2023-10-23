@@ -80,7 +80,7 @@ export const newArrival = (req: Request, res: Response) => {
   // Use Sequelize or your database library to query for products created within the last three months
   Product.findAll({
     attributes:
-      ['img','short_description','price','name']
+      ['id','img','short_description','price','name']
     ,
     where: {
       createdAt: {
@@ -98,7 +98,7 @@ export const newArrival = (req: Request, res: Response) => {
 //#############################################################################
 export const shopByCollection = (req: Request, res: Response) => {
   Categorie.findAll({
-    attributes: ['img', 'name'],
+    attributes: ['id','img', 'name'],
   })
     .then((result: any) => {
       res.send(result);
@@ -111,7 +111,7 @@ export const shopByCollection = (req: Request, res: Response) => {
 //############################################################################################
 export const shopByBrand = (req: Request, res: Response) => {
   Brand.findAll({
-    attributes: ['logo'],
+    attributes: ['id','logo'],
   })
     .then((result: any) => {
       res.send(result);
@@ -124,7 +124,7 @@ export const shopByBrand = (req: Request, res: Response) => {
 //###################################################################
 export const viewCategoryName=(req:Request,res:Response)=>{
   Categorie.findAll({
-    attributes: ['name'],
+    attributes: ['id','name'],
     limit: 7,
   })
     .then((result: any) => {
@@ -144,7 +144,7 @@ export const searchByBrandOrProductName=(req:Request,res:Response)=>{
       { name: barndOrProductName },
       { brand_name: barndOrProductName },
     ]},
-    attributes: ['img', 'name','price','short_description','rating']
+    attributes: ['id','img', 'name','price','short_description','rating']
   }).then((result: any) => {
     res.send(result);
   })
@@ -161,7 +161,7 @@ export const viewProductBelongCategory=(req:Request,res:Response)=>{
   Product.findAll({
     where:{
        categorie_name: categoryName },
-    attributes: ['img', 'name','price','short_description','rating']
+    attributes: ['id','img', 'name','price','short_description','rating']
   }).then((result: any) => {
     res.send(result);
   })
@@ -179,7 +179,7 @@ export const TopCategoriesFormobile=(req:Request,res:Response)=>{
         [Op.ne]: null // Check if 'mobile_img' is not equal to null
       }
     },
-    attributes: ['name','mobile_img'],
+    attributes: ['id','name','mobile_img'],
     limit: 7,
   })
     .then((result: any) => {
