@@ -210,23 +210,29 @@ export const viewProductDetailById = (req: Request, res: Response) => {
 
 }
 //##############################################################################################
-export const viewRelatedProduct = ((req: Request, res: Response) => {
-  const productId = req.query.id
+export const viewRelatedProduct = (req: Request, res: Response) => {
+  const productId = req.query.id;
+
+  // Use Promises to handle the database queries
   Product.findOne({
     where: { id: productId },
-    attributes: ['categoreiId']
-  }).then((result: any) => {
-    Product.findAll({
-      where: { categoreiId: result['categoreiId'] },
-      attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating']
-    }).then((result) => {
-      res.send(result)
-    }).catch((error: any) => {
+    attributes: ['categoryId'], // Corrected the attribute name
+  })
+    .then((product:any) => {
+      if (!product) {
+        res.status(404).send('Product not found');
+      } else {
+        return Product.findAll({
+          where: { categoryId: product['categoryId'] },
+          attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating'],
+        });
+      }
+    })
+    .then((relatedProducts:any) => {
+      res.send(relatedProducts);
+    })
+    .catch((error:any) => {
       console.error('Error:', error);
       res.status(500).send('Internal Server Error');
     });
-  }).catch((error: any) => {
-    console.error('Error:', error);
-    res.status(500).send('Internal Server Error');
-  });
-})
+};
