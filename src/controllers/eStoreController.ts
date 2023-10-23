@@ -216,14 +216,14 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
   // Use Promises to handle the database queries
   Product.findOne({
     where: { id: productId },
-    attributes: ['categoreiId'], // Corrected the attribute name
+    attributes: ['categoreiId','id'], // Corrected the attribute name
   })
     .then((product:any) => {
       if (!product) {
         res.status(404).send('Product not found');
       } else {
         return Product.findAll({
-          where: { categoreiId: product['categoreiId'] },
+          where: { categoreiId: product['categoreiId'] ,id:{[Op.ne]:product['id']}},
           attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating'],
         });
       }
