@@ -12,5 +12,6 @@ router.get('/viewCategoryName',eStoreController.viewCategoryName)
 router.get('/searchProduct',eStoreController.searchByBrandOrProductName)
 router.get('/viewProductByCategory',eStoreController.viewProductBelongCategory)
 router.get('/TopCategories',eStoreController.TopCategoriesFormobile)
+router.get('/productDetail',eStoreController.viewProductDetailById)
 export default router;
 
