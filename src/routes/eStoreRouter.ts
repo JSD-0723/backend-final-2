@@ -13,5 +13,6 @@ router.get('/searchProduct',eStoreController.searchByBrandOrProductName)
 router.get('/viewProductByCategory',eStoreController.viewProductBelongCategory)
 router.get('/TopCategories',eStoreController.TopCategoriesFormobile)
 router.get('/productDetail',eStoreController.viewProductDetailById)
+router.get('/viewRelatedProduct',eStoreController.viewRelatedProduct)
 export default router;
 

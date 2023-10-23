@@ -210,3 +210,23 @@ export const viewProductDetailById = (req: Request, res: Response) => {
 
 }
 //##############################################################################################
+export const viewRelatedProduct = ((req: Request, res: Response) => {
+  const productId = req.query.id
+  Product.findOne({
+    where: { id: productId },
+    attributes: ['categoreiId']
+  }).then((result: any) => {
+    Product.findAll({
+      where: { categoreiId: result['categoreiId'] },
+      attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating']
+    }).then((result) => {
+      res.send(result)
+    }).catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    });
+  }).catch((error: any) => {
+    console.error('Error:', error);
+    res.status(500).send('Internal Server Error');
+  });
+})
