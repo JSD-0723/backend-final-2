@@ -241,12 +241,13 @@ export const addToCart=(req:Request,res:Response)=>{
   const bearerToken :any=req.headers['authorization'];
   const Token = bearerToken.split(' ')[1];
   try{
-    var tokenResult:any=decodeToken(Token,key)
+    const pylod=decodeToken(Token,key)
+     var userId=pylod['id']
   }catch(err){
     res.status(505).send('unautorized')
   }
   const productId=req.body.productId
-  res.send(tokenResult['id'])
+  res.send(userId)
   
 
 }
