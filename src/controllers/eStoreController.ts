@@ -241,6 +241,7 @@ export const addToCart=(req:Request,res:Response)=>{
   try{
     const token:any=req.headers.authorization
     var tokenResult:any=decodeToken(token,key)
+    res.send(token)
 
   }catch(err:any){
     res.send(err)
