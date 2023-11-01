@@ -239,40 +239,21 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
 };
 //#####################################################################################
 export const addToCart = (req: Request, res: Response) => {
-  try {
-    const bearerToken: any = req.headers['authorization'];
+  const bearerToken :any=req.headers['authorization'];
+  const Token = bearerToken.split(' ')[1];
+  console.log(Token)
+  try{
+    const pylod=decodeToken(Token,key)
+    var userId=pylod['id']
 
-    if (!bearerToken) {
-      return res.status(401).send('Unauthorized: No token provided');
-    }
-
-    const token = bearerToken.split(' ')[1];
-
-    if (!token) {
-      return res.status(401).send('Unauthorized: Invalid token format');
-    }
-
-    decodeToken(token, key)
-      .then((payload: any) => {
-        const userId = payload['id'];
-
-        const productId = req.body.productId;
-
-        if (!userId) {
-          return res.status(401).send('Unauthorized: Invalid user ID');
-        }
-
-        return cart.create({ userId: userId, productId: productId });
-      })
-      .then(() => {
-        res.status(200).send('Added to cart successfully');
-      })
-      .catch((error:any) => {  
-          res.status(500).send('Error: ' + error.message);
-      
-      });
-
-  } catch (error:any) {
-    res.status(500).send('Error: ' + error.message);
+  }catch(err){
+    res.status(505).send('unautorized')
   }
-};
+  const productId=req.body.productId
+  cart.create({userId:userId,productId:productId}).then(
+    res.status(200).send('add to cart successfully')
+  ) .catch((error:any) => {
+    console.error('Error:', error);
+    res.status(500).send('Internal Server Error');
+  });
+  }
