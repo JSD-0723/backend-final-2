@@ -237,17 +237,22 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
     });
 };
 //#####################################################################################
-export const addToCart=(req:Request,res:Response)=>{
-  const bearerToken :any=req.headers['authorization'];
-  const Token = bearerToken.split(' ')[1];
-  try{
-    var pylod=decodeToken(Token,key)
-     var userId=pylod['id']
-  }catch(err){
-    res.status(505).send('unautorized')
+export const addToCart = (req: Request, res: Response) => {
+  const bearerToken: any = req.headers['authorization'];
+
+  if (!bearerToken || !bearerToken.startsWith('Bearer ')) {
+    return res.status(401).send('Unauthorized: Invalid or missing token');
   }
-  const productId=req.body.productId
- 
-  res.send(pylod.id)
-  
-}
+
+  const token = bearerToken.split(' ')[1];
+
+  try {
+    var payload = decodeToken(token, key);
+    var userId = payload['id'];
+  } catch (err) {
+    return res.status(500).send('Unauthorized: Token invalid or expired');
+  }
+
+  const productId = req.body.productId;
+  res.send(payload.id);
+};
