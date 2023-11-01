@@ -238,26 +238,16 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
 };
 //#####################################################################################
 export const addToCart = (req: Request, res: Response) => {
-  const bearerToken: any = req.headers['authorization'];
+  const bearerToken :any=req.headers['authorization'];
+  const Token = bearerToken.split(' ')[1];
+  console.log(Token)
+  try{
+    const pylod=decodeToken(Token,key)
+    var userId=pylod['id']
 
-  if (!bearerToken || !bearerToken.startsWith('Bearer ')) {
-    return res.status(401).send('Unauthorized: Invalid or missing token');
+  }catch(err){
+    res.status(505).send('unautorized')
   }
 
-  const token = bearerToken.split(' ')[1];
-
-  try {
-    var payload = decodeToken(token, key);
-
-    if (!payload || typeof payload !== 'object' || !('id' in payload)) {
-      return res.status(401).send('Unauthorized: Invalid token payload');
-    }
-
-    const userId = payload.id; // Assuming 'id' exists in payload
-
-    const productId = req.body.productId;
-    res.send(userId);
-  } catch (err) {
-    return res.status(500).send('Internal Server Error');
-  }
+  res.send(userId)
 };
