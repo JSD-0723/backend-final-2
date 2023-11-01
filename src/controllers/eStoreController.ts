@@ -248,6 +248,7 @@ export const addToCart = (req: Request, res: Response) => {
   }catch(err){
     res.status(505).send('unautorized')
   }
-
+  console.log(/*useeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerid*/+userId)
   res.send(userId)
+
 };
