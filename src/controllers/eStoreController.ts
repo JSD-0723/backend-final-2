@@ -239,7 +239,8 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
 //#####################################################################################
 export const addToCart=(req:Request,res:Response)=>{
   try{
-    var tokenResult:any=decodeToken
+    const token:any=req.headers.authorization
+    var tokenResult:any=decodeToken(token,key)
 
   }catch(err:any){
     res.send(err)
