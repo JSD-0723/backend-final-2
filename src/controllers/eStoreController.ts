@@ -267,15 +267,12 @@ export const addToCart = (req: Request, res: Response) => {
       .then(() => {
         res.status(200).send('Added to cart successfully');
       })
-      .catch((error) => {
-        if (error instanceof Error) {
+      .catch((error:any) => {  
           res.status(500).send('Error: ' + error.message);
-        } else {
-          res.status(500).send('An unexpected error occurred');
-        }
+      
       });
 
-  } catch (error) {
+  } catch (error:any) {
     res.status(500).send('Error: ' + error.message);
   }
 };
