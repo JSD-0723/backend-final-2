@@ -7,6 +7,7 @@ const User = modelsMap['user']
 const Categorie = modelsMap['categorie']
 const Product = modelsMap['product']
 const Brand = modelsMap['brand']
+const cart=modelsMap['cart']
 const key: any = process.env.tokenKey
 const { Op, literal } = require('sequelize');
 
@@ -238,17 +239,43 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
 };
 //#####################################################################################
 export const addToCart = (req: Request, res: Response) => {
-  const bearerToken :any=req.headers['authorization'];
-  const Token = bearerToken.split(' ')[1];
-  console.log(Token)
-  try{
-    const pylod=decodeToken(Token,key)
-    var userId=pylod['id']
+  try {
+    const bearerToken: any = req.headers['authorization'];
 
-  }catch(err){
-    res.status(505).send('unautorized')
+    if (!bearerToken) {
+      return res.status(401).send('Unauthorized: No token provided');
+    }
+
+    const token = bearerToken.split(' ')[1];
+
+    if (!token) {
+      return res.status(401).send('Unauthorized: Invalid token format');
+    }
+
+    decodeToken(token, key)
+      .then((payload: any) => {
+        const userId = payload['id'];
+
+        const productId = req.body.productId;
+
+        if (!userId) {
+          return res.status(401).send('Unauthorized: Invalid user ID');
+        }
+
+        return cart.create({ userId: userId, productId: productId });
+      })
+      .then(() => {
+        res.status(200).send('Added to cart successfully');
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          res.status(500).send('Error: ' + error.message);
+        } else {
+          res.status(500).send('An unexpected error occurred');
+        }
+      });
+
+  } catch (error) {
+    res.status(500).send('Error: ' + error.message);
   }
-  console.log(/*useeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerid*/+userId)
-  res.send(userId)
-
 };

@@ -272,7 +272,7 @@ function createModels() {
   return {
     'user': User, 'userRole': user_role,
     'wishList': wish_list, 'review': review, 'rating': rating,
-    'product': product, 'categorie': categorie, 'brand': brand
+    'product': product, 'categorie': categorie, 'brand': brand,'cart':cart
   };
 }
 
