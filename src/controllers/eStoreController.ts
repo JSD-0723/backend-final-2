@@ -238,14 +238,12 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
 };
 //#####################################################################################
 export const addToCart=(req:Request,res:Response)=>{
+  const bearerToken :any=req.headers['authorization'];
+  const Token = bearerToken.split(' ')[1];
   try{
-    const token:any=req.headers.authorization
-    var tokenResult:any=decodeToken(token,key)
-    res.send(token)
-
-  }catch(err:any){
-    res.send(err)
-
+    var tokenResult:any=decodeToken(Token,key)
+  }catch(err){
+    res.status(505).send('unautorized')
   }
   const productId=req.body.productId
   const userId=tokenResult['id']
