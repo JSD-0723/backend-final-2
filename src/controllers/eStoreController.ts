@@ -248,6 +248,6 @@ export const addToCart=(req:Request,res:Response)=>{
   }
   const productId=req.body.productId
  
-  res.send(pylod)
+  res.send(pylod.id)
   
 }
