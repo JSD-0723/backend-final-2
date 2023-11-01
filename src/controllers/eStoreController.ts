@@ -246,8 +246,7 @@ export const addToCart=(req:Request,res:Response)=>{
     res.status(505).send('unautorized')
   }
   const productId=req.body.productId
-  const userId=tokenResult['id']
-  res.send(userId)
+  res.send(tokenResult)
   
 
 }
