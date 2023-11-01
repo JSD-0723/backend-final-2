@@ -248,11 +248,16 @@ export const addToCart = (req: Request, res: Response) => {
 
   try {
     var payload = decodeToken(token, key);
-    var userId = payload['id'];
-  } catch (err) {
-    return res.status(500).send('Unauthorized: Token invalid or expired');
-  }
 
-  const productId = req.body.productId;
-  res.send(payload.id);
+    if (!payload || typeof payload !== 'object' || !('id' in payload)) {
+      return res.status(401).send('Unauthorized: Invalid token payload');
+    }
+
+    const userId = payload.id; // Assuming 'id' exists in payload
+
+    const productId = req.body.productId;
+    res.send(userId);
+  } catch (err) {
+    return res.status(500).send('Internal Server Error');
+  }
 };
