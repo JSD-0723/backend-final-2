@@ -91,6 +91,19 @@ function createModels() {
     },
   })
 
+  // create cart model 
+
+  const cart = sequelize.define("cart", {
+
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true
+    },
+  })
+
   // create review model
   const review = sequelize.define("review", {
     id: {
@@ -231,8 +244,8 @@ function createModels() {
   review.belongsTo(User)
   User.hasMany(rating)
   rating.belongsTo(User)
-  wish_list.hasMany(product)
-  product.belongsTo(wish_list)
+  product.hasMany(wish_list)
+  wish_list.belongsTo(product)
   product.hasMany(review)
   review.belongsTo(product)
   product.hasMany(rating)
@@ -241,6 +254,11 @@ function createModels() {
   product.belongsTo(brand)
   categorie.hasMany(product)
   product.belongsTo(categorie)
+  User.hasMany(cart)
+  cart.belongsTo(User)
+  product.hasMany(cart)
+  cart.belongsTo(product)
+  
 
 
   sequelize.sync({ alter: true })

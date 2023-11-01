@@ -236,3 +236,18 @@ export const viewRelatedProduct = (req: Request, res: Response) => {
       res.status(500).send('Internal Server Error');
     });
 };
+//#####################################################################################
+export const addToCart=(req:Request,res:Response)=>{
+  try{
+    var tokenResult:any=decodeToken
+
+  }catch(err:any){
+    res.send(err)
+
+  }
+  const productId=req.body.productId
+  const userId=tokenResult['id']
+  res.send(userId)
+  
+
+}
