@@ -161,20 +161,35 @@ export const searchByBrandOrProductName = (req: Request, res: Response) => {
 }
 //####################################################################
 export const viewProductBelongCategory = (req: Request, res: Response) => {
-  const categoryName = req.query.name
-  Product.findAll({
+  const categoryName = req.query.name;
+  const page :any = req.query.page || 1; // Extract page number from query parameter, default to 1
+  const limit :any= req.query.limit|| 10; // Extract limit from query parameter, default to 10
+
+  const offset = (page - 1) * limit;
+
+  Product.findAndCountAll({
     where: {
       categorie_name: categoryName
     },
-    attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating']
-  }).then((result: any) => {
-    res.send(result);
+    attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating'],
+    limit: limit,
+    offset: offset
   })
+    .then((result: any) => {
+      const { count, rows } = result;
+      const totalPages = Math.ceil(count / limit);
+
+      res.send({
+        totalProducts: count,
+        totalPages: totalPages,
+        currentPage: page,
+        products: rows
+      });
+    })
     .catch((error: any) => {
       console.error('Error:', error);
       res.status(500).send('Internal Server Error');
     });
-
 }
 //#############################################################################
 export const TopCategoriesFormobile = (req: Request, res: Response) => {
