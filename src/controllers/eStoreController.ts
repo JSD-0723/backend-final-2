@@ -162,8 +162,8 @@ export const searchByBrandOrProductName = (req: Request, res: Response) => {
 //####################################################################
 export const viewProductBelongCategory = (req: Request, res: Response) => {
   const categoryName = req.query.name;
-  const page :any = req.query.page || 1; // Extract page number from query parameter, default to 1
-  const limit :any= req.query.limit|| 10; // Extract limit from query parameter, default to 10
+  const page :any = parseInt(req.query.page as string) || 1; // Extract page number from query parameter, default to 1
+  const limit :any= parseInt(req.query.limit as string)|| 10; // Extract limit from query parameter, default to 10
 
   const offset = (page - 1) * limit;
 
