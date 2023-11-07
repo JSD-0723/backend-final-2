@@ -140,25 +140,44 @@ export const viewCategoryName = (req: Request, res: Response) => {
 }
 //#######################################################################
 export const searchByBrandOrProductName = (req: Request, res: Response) => {
-  const barndOrProductName = req.query.name
-  Product.findAll({
+  const brandOrProductName = req.query.name;
+  const page :any = parseInt(req.query.page as string) || 1;// Get the requested page or default to 1
+  const limit = 10; // Number of results per page
+
+  const offset = (page - 1) * limit;
+
+  Product.findAndCountAll({
     where: {
       [Op.or]: [
-        { name: {[Op.like]:`%${barndOrProductName}%` }},
-        { brand_name:{[Op.like]: `%${barndOrProductName}%`} },
-      ]
+        { name: { [Op.like]: `%${brandOrProductName}%` } },
+        { brand_name: { [Op.like]: `%${brandOrProductName}%` } },
+      ],
     },
-    attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating']
-  }).then((result: any) => {
-    res.send(result);
+    attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating'],
+    limit: limit,
+    offset: offset,
   })
+    .then((result: any) => {
+      const { count, rows } = result;
+      const totalPages = Math.ceil(count / limit);
+
+      if (page > totalPages) {
+        return res.status(404).send('Page not found');
+      }
+
+      res.send({
+        totalItems: count,
+        totalPages: totalPages,
+        currentPage: page,
+        products: rows,
+      });
+    })
     .catch((error: any) => {
       console.error('Error:', error);
       res.status(500).send('Internal Server Error');
     });
+};
 
-
-}
 //####################################################################
 export const viewProductBelongCategory = (req: Request, res: Response) => {
   const categoryName = req.query.name;
