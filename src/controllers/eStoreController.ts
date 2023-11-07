@@ -144,8 +144,8 @@ export const searchByBrandOrProductName = (req: Request, res: Response) => {
   Product.findAll({
     where: {
       [Op.or]: [
-        { name: barndOrProductName },
-        { brand_name: barndOrProductName },
+        { name: {[Op.like]:`%${barndOrProductName}%` }},
+        { brand_name:{[Op.like]: `%${barndOrProductName}%`} },
       ]
     },
     attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating']
