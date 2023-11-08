@@ -113,7 +113,7 @@ export const shopByCollection = (req: Request, res: Response) => {
 //############################################################################################
 export const shopByBrand = (req: Request, res: Response) => {
   Brand.findAll({
-    attributes: ['id', 'logo'],
+    attributes: ['id','name','logo'],
   })
     .then((result: any) => {
       res.send(result);
