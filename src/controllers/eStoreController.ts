@@ -291,3 +291,35 @@ export const addToCart = (req: Request, res: Response) => {
     res.status(500).send('Internal Server Error');
   });
   }
+//###########################################################################################
+export const viewProductBelongBrand = (req: Request, res: Response) => {
+  const brandName = req.query.name;
+  const page :any = parseInt(req.query.page as string) || 1; // Extract page number from query parameter, default to 1
+  const limit :any= parseInt(req.query.limit as string)|| 10; // Extract limit from query parameter, default to 10
+
+  const offset = (page - 1) * limit;
+
+  Product.findAndCountAll({
+    where: {
+      brand_name: brandName
+    },
+    attributes: ['id', 'img', 'name', 'price', 'short_description', 'rating'],
+    limit: limit,
+    offset: offset
+  })
+    .then((result: any) => {
+      const { count, rows } = result;
+      const totalPages = Math.ceil(count / limit);
+
+      res.send({
+        totalProducts: count,
+        totalPages: totalPages,
+        currentPage: page,
+        products: rows
+      });
+    })
+    .catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    });
+}

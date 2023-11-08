@@ -14,6 +14,7 @@ router.get('/viewProductByCategory',eStoreController.viewProductBelongCategory)
 router.get('/TopCategories',eStoreController.TopCategoriesFormobile)
 router.get('/productDetail',eStoreController.viewProductDetailById)
 router.get('/viewRelatedProduct',eStoreController.viewRelatedProduct)
+router.get('/viewProductByBrand',eStoreController.viewProductBelongBrand)
 router.post('/addToCart',eStoreController.addToCart)
 export default router;
 
