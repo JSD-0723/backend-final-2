@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 dotenv.config()
 const host = process.env.host;
 const databaseName = process.env.databaseName;
-const useName = process.env.useNAme || 'root';
+const useName = process.env.useName || 'root';
 const password = process.env.password;
 const databasePort = process.env.databasePort;
 
@@ -45,7 +45,7 @@ function createModels() {
         this.setDataValue('password', hashedPassword);
       }
     },
-    
+
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -91,6 +91,19 @@ function createModels() {
     },
   })
 
+  // create cart model 
+
+  const cart = sequelize.define("cart", {
+
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true
+    },
+  })
+
   // create review model
   const review = sequelize.define("review", {
     id: {
@@ -104,7 +117,7 @@ function createModels() {
       type: DataTypes.STRING,
       allowNull: false
     },
-  
+
   })
 
   const rating = sequelize.define('rating', {
@@ -121,7 +134,7 @@ function createModels() {
       allowNull: false,
 
     },
-   
+
   })
 
   const product = sequelize.define('product', {
@@ -158,7 +171,21 @@ function createModels() {
       type: DataTypes.STRING,
       allowNull: true
     },
- 
+    brand_name:{
+      type:DataTypes.STRING,
+      allowNull:true
+    }
+    ,
+    categorie_name:{
+      type:DataTypes.STRING,
+      allowNull:true
+    }
+    ,rating:{
+      type:DataTypes.INTEGER,
+      allowNull:true
+
+    }
+
   }
   )
 
@@ -170,20 +197,20 @@ function createModels() {
       autoIncrement: true,
       unique: true
     },
-    name:{
-      type:DataTypes.STRING,
-      allowNull:false
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
 
     },
     logo: {
       type: DataTypes.STRING,
       allowNull: true
     }
-  },{
-    timestamps:false
+  }, {
+    timestamps: false
   })
 
-  const categorei = sequelize.define('categorei', {
+  const categorie = sequelize.define('categorei', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -191,20 +218,24 @@ function createModels() {
       autoIncrement: true,
       unique: true
     },
-    name:{
-type:DataTypes.STRING,
-allowNull:false
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    logo: {
+    img: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    mobile_img:{
+      type: DataTypes.STRING,
+      allowNull: true 
     }
-  },{
-    timestamps:false
+  }, {
+    timestamps: false
   }
   )
 
-
+  //relation 
   user_role.hasMany(User)
   User.belongsTo(user_role)
   User.hasOne(wish_list)
@@ -213,22 +244,21 @@ allowNull:false
   review.belongsTo(User)
   User.hasMany(rating)
   rating.belongsTo(User)
-  wish_list.hasMany(product)
-  product.belongsTo(wish_list)
+  product.hasMany(wish_list)
+  wish_list.belongsTo(product)
   product.hasMany(review)
   review.belongsTo(product)
   product.hasMany(rating)
   rating.belongsTo(product)
   brand.hasMany(product)
   product.belongsTo(brand)
-  categorei.hasMany(product)
-  product.belongsTo(categorei)
-
-
-
-
-
-
+  categorie.hasMany(product)
+  product.belongsTo(categorie)
+  User.hasMany(cart)
+  cart.belongsTo(User)
+  product.hasMany(cart)
+  cart.belongsTo(product)
+  
 
 
   sequelize.sync({ alter: true })
@@ -239,7 +269,11 @@ allowNull:false
       console.error(error);
     });
 
-  return { 'user': User, 'userRole': user_role, 'wishList': wish_list, 'review': review, 'rating': rating, 'product': product, 'categorei': categorei, 'brand': brand };
+  return {
+    'user': User, 'userRole': user_role,
+    'wishList': wish_list, 'review': review, 'rating': rating,
+    'product': product, 'categorie': categorie, 'brand': brand,'cart':cart
+  };
 }
 
 
