@@ -142,7 +142,7 @@ export const viewCategoryName = (req: Request, res: Response) => {
 export const searchByBrandOrProductName = (req: Request, res: Response) => {
   const brandOrProductName = req.query.name;
   const page :any = parseInt(req.query.page as string) || 1;// Get the requested page or default to 1
-  const limit = 5; // Number of results per page
+  const limit = 10; // Number of results per page
 
   const offset = (page - 1) * limit;
 
